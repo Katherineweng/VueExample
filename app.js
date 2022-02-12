@@ -4,10 +4,15 @@ const app = Vue.createApp({
     // specify component template that would be rendered inside the app element
     data() {
         return {
+            url: 'http://www.thenetninja.co.uk',
             showBooks: true,
-            title: 'The Final Empire',
-            author: 'Brandon Sanderson',
-            age: 45
+            books: [
+                { title: 'Name of the Wind', author: 'Patrick Rothfuss', img:'assets/1.jpg', isFav: true },
+                { title: 'The Way of Kings', author: 'Brandon Sanderson', img:'assets/1.jpg', isFav: false },
+                { title: 'The Final Empire', author: 'Brandon Sanderson', img:'assets/1.jpg', isFav: true },
+            ],
+            x: 0,
+            y: 0
         }
     },
     methods: {
@@ -16,6 +21,25 @@ const app = Vue.createApp({
         },
         toggleShowBooks() {
             this.showBooks = !this.showBooks
+        },
+        handleEvent(e, data) {
+            console.log(e, e.type)
+            // check so when no data is passed in, no error raised
+            if (data) {
+                console.log(data)
+            }
+        },
+        handleMousemove(e) {
+            this.x = e.offsetX
+            this.y = e.offsetY
+        },
+        toggleFav(book) {
+            book.isFav = !book.isFav
+        }
+    },
+    computed: {
+        filteredBooks() {
+            return this.books.filter((book) => book.isFav)
         }
     }
 })
